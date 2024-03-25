@@ -24,6 +24,8 @@ Generates a Solana keypair to a file called foo.txt with a QR code being saved i
 
 ## Installation
 
+__Note: As of v0.1.0, solwallet is only available for Windows__
+
 If you are using solwallet on __Windows__, get the latest NodeJS [here](https://nodejs.org/en/download)
 
 If you are using solwallet on __Linux__ or __MacOS__, follow the installation instructions [here](https://nodejs.org/en/download/package-manager)
