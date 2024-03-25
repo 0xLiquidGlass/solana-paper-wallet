@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "description": "Solana paper wallet on NodeJS",
+  "os": ["win32"],
   "bin": {
     "solwallet": "./index.js"
   },

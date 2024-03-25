@@ -1,6 +1,4 @@
-#!/usr/bin/env node
-
-process.argv.push('--no-deprecation');
+#!/usr/bin/env node --no-deprecation
 
 const { Keypair, PublicKey} = require("@solana/web3.js");
 const { HDKey } = require("micro-ed25519-hdkey");
@@ -33,15 +31,16 @@ function outputKeypair(generatedPubKey, mnemonic){
     console.log("Seed Phrase:", mnemonic);
 
     // Output address as QR if needed
-    if (process.argv[2] === "--qr" || "-q"){
-        qr.toFile("./sol-qr-address.png", generatedPubKey, {
-            color: {
-                dark: "#000",
-                light: "#fff"
-            }
-        }, (err) => {
-            if (err) throw err;
-        });
+    switch (process.argv[2]){
+        case "--qr" || "-q":
+            qr.toFile("./sol-qr-address.png", generatedPubKey, {
+                color: {
+                    dark: "#000",
+                    light: "#fff"
+                }
+            }, (err) => {
+                if (err) throw err;
+            });
     }
 }
 
