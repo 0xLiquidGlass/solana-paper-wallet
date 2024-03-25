@@ -32,7 +32,8 @@ function outputKeypair(generatedPubKey, mnemonic){
 
     // Output address as QR if needed
     switch (process.argv[2]){
-        case "--qr" || "-q":
+        case "--qr":
+        case "-q":
             qr.toFile("./sol-qr-address.png", generatedPubKey, {
                 color: {
                     dark: "#000",
