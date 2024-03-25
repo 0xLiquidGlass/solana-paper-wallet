@@ -4,8 +4,13 @@
   "license": "MIT",
   "description": "Solana paper wallet on NodeJS",
   "os": ["win32"],
+  "keywords": ["solana", "wallet", "paper wallet"],
   "bin": {
     "solwallet": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xLiquidGlass/solana-paper-wallet.git"
   },
   "author": {
     "name": "Liquid Glass",
