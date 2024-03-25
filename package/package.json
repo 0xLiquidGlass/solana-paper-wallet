@@ -1,0 +1,20 @@
+{
+  "name": "solwallet",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Solana paper wallet on NodeJS",
+  "bin": {
+    "solwallet": "./index.js"
+  },
+  "author": {
+    "name": "Liquid Glass",
+    "email": "liquid.glass.drops@gmail.com",
+    "url": "https://github.com/0xLiquidGlass"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.91.1",
+    "bip39": "^3.1.0",
+    "micro-ed25519-hdkey": "^0.1.2",
+    "qrcode": "^1.5.3"
+  }
+}
