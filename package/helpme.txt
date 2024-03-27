@@ -1,0 +1,33 @@
+solwallet - A Solana paper wallet
+
+Usage:
+
+solwallet <options>
+
+Options:
+
+--generate or -g
+(Generate a keypair with a QR code for the generated address)
+
+--encrypt or -e
+(Generate a password protected keypair to a file alongside a QR code for the generated address.
+GnuPG must be installed for this option to work)
+
+--version or -v
+(Show the current version of the paper wallet)
+
+--help or -h
+(Show this help page)
+
+
+Examples:
+
+solwallet -e
+
+(Generates an encrypted Solana keypair to a file in the sol/ folder. Will create the sol/ folder 
+if it does not exist. This is the recommended option to save your keypair)
+
+solwallet -g > foo.txt
+
+(Generates a Solana keypair to a file called foo.txt with a QR code being saved in the current 
+directory)
