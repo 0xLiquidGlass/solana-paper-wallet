@@ -1,6 +1,6 @@
 {
   "name": "solwallet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "Solana paper wallet on NodeJS",
   "os": ["win32"],
@@ -8,6 +8,7 @@
   "bin": {
     "solwallet": "./index.js"
   },
+  "files": ["helpme.txt"],
   "repository": {
     "type": "git",
     "url": "https://github.com/0xLiquidGlass/solana-paper-wallet.git"

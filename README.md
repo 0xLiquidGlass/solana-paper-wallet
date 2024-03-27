@@ -5,30 +5,41 @@ This is a solana paper wallet written using NodeJS, designed to generate a new s
 
 `solwallet <options>`
 
---version or -v (Show the current version of the paper wallet)
+### Options:
 
---qr or -q (Generate a QR code for the generated address)
+--generate or -g\
+(Generate a keypair with a QR code for the generated address)
 
---help or -h (This only shows the option to generate the QR code.
-              Can be ignored for now)
+--encrypt or -e\
+(Generate a password protected keypair to a file alongside a QR code for the generated address.\
+[GnuPG](https://gpg4win.org/download.html) must be installed for this option to work)
+
+--version or -v\
+(Show the current version of the paper wallet)
+
+--help or -h\
+(Shows the help page)
 
 ## Examples
 
-`solwallet > foo.txt`
+`solwallet -e`
 
-Generates a Solana keypair to a file called foo.txt in the current directory
+Generates an encrypted Solana keypair to a file in the sol/ folder. Will create the sol/ folder if it does not exist.\
+This is the recommended option to save your keypair
 
-`solwallet -q > foo.txt`
+`solwallet -g > foo.txt`
 
 Generates a Solana keypair to a file called foo.txt with a QR code being saved in the current directory
 
 ## Installation
 
-__Note: As of v0.1.0, solwallet is only available for Windows__
+__Note: As of v0.2.0, solwallet is only available for Windows__
 
 If you are using solwallet on __Windows__, get the latest NodeJS [here](https://nodejs.org/en/download)
 
 If you are using solwallet on __Linux__ or __MacOS__, follow the installation instructions [here](https://nodejs.org/en/download/package-manager)
+
+To be able to encrypt the generated keypair before it is saved to a file, [GnuPG](https://gpg4win.org/download.html) must be installed
 
 To install this script, run
 
@@ -42,7 +53,8 @@ It should show the lastest version of the script installed
 
 ## Contributing
 
-Any contributions to the code are welcome. This can come in the form of opening pull requests if you would like to contribute to the code directly or filing an issue if you would like to suggest any improvements
+Any contributions to the code are welcome. This can come in the form of opening pull requests if you would like to contribute \
+to the code directly or filing an issue if you would like to suggest any improvements
 
 ## Credits
 

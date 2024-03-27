@@ -5,9 +5,11 @@ const { HDKey } = require("micro-ed25519-hdkey");
 const bip39 = require("bip39");
 const qr = require('qrcode');
 const fs = require('fs');
+const path = require("path")
+const { exec } = require("child_process");
 
 // Variables
-const versionNumber = "0.1.0";
+const versionNumber = "0.2.0";
 
 function generateKeypair(){
     // Generate seed phrase
@@ -22,35 +24,98 @@ function generateKeypair(){
     return { keypair, mnemonic };
 }
 
-function invalidKeypair(){
-    console.log("The generated keypair is invalid. Please try again");
+function generateQrCode(generatedPubKey){
+    qr.toFile("./sol-qr-address.png", generatedPubKey, {
+        color: {
+            dark: "#000",
+            light: "#fff"
+        }
+     }, (err) => {
+         if (err) throw err;
+     });
+}
+
+function getCurrentDateTime(){
+    const currentDateTime = new Date();
+
+    const year = currentDateTime.getFullYear();
+    const month = String(currentDateTime.getMonth()).padStart(2, "0");
+    const day = String(currentDateTime.getDate()).padStart(2, "0");
+
+    const hours = String(currentDateTime.getHours()).padStart(2, "0");
+    const minutes = String(currentDateTime.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDateTime.getSeconds()).padStart(2, "0");
+
+    const readableDateTime = `${year}-${month}-${day}T${hours}-${minutes}-${seconds}`;
+    return readableDateTime;
+}
+
+function checkoutFolder(folderPath){
+    // Check if folder exists
+    // If the folder is not created, the folder will be created
+    try{
+        fs.accessSync(folderPath, fs.constants.F_OK);
+    } catch (err) {
+        fs.mkdirSync(folderPath, { recursive: true });
+    }
 }
 
 function outputKeypair(generatedPubKey, mnemonic){
-    console.log(generatedPubKey);
-    console.log("Seed Phrase:", mnemonic);
-
     // Output address as QR if needed
     switch (process.argv[2]){
-        case "--qr":
-        case "-q":
-            qr.toFile("./sol-qr-address.png", generatedPubKey, {
-                color: {
-                    dark: "#000",
-                    light: "#fff"
-                }
-            }, (err) => {
-                if (err) throw err;
-            });
+        case "--generate":
+        case "-g":
+           console.log("\nAddress:", generatedPubKey);
+           console.log("\nSeed Phrase:", mnemonic);
+           generateQrCode(generatedPubKey);
     }
+
+    // Output encrypted keypair and QR code
+    // For this to work, GPG must be installed
+    switch (process.argv[2]){
+        case "--encrypt":
+        case "-e":
+            const folderPath = "./sol/";
+            const currentDateTime = getCurrentDateTime();
+            checkoutFolder(folderPath);
+
+            const filenameOut = folderPath + "sol-" + currentDateTime + ".asc";
+            const plaindata = "Address: " + generatedPubKey + "\n" + "Seed Phrase: " + mnemonic;
+            const encryptData = exec("gpg -c -a -o " + filenameOut, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                    return;
+                }
+                generateQrCode(generatedPubKey);
+            });
+             encryptData.stdin.write(plaindata);
+             encryptData.stdin.end();
+
+    }
+}
+
+function readHelpMe(){
+    const solwalletWhere = path.dirname(require.resolve("solwallet"));
+    const helpmePath = path.join(solwalletWhere, "helpme.txt");
+
+    fs.readFile(helpmePath, "utf8", (error, helpmeData) => {
+        if (error) {
+            console.error(`Error: ${error}`);
+            return;
+        }
+        console.log(helpmeData);
+    });
 }
 
 function main(){
     switch (process.argv[2]){
         case "--help":
         case "-h":
-            console.log("\nUse '--qr' or '-q' to generate a QR code alongside the generated address");
-            console.log("The QR code can be found as 'sol-qr-address.png' in the same folder\n");
+            readHelpMe();
             break;
         case "--version":
         case "-v":
@@ -65,10 +130,10 @@ function main(){
             if (PublicKey.isOnCurve(generatedPubKey)){
                 outputKeypair(generatedPubKey, mnemonic);
             } else {
-                invalidKeypair();
+                console.log("The generated keypair is invalid. Please try again");
             }
         }
     
 }
 
-main()
+main();
