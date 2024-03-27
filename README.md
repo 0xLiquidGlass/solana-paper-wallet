@@ -53,8 +53,9 @@ It should show the lastest version of the script installed
 
 ## Contributing
 
-Any contributions to the code are welcome. This can come in the form of opening pull requests if you would like to contribute \
-to the code directly or filing an issue if you would like to suggest any improvements
+Any contributions to the code are welcome. This can come in the form of opening pull requests \
+if you would like to contribute to the code directly or filing an issue if you would like to suggest\
+any improvements
 
 ## Credits
 
@@ -67,3 +68,4 @@ to the code directly or filing an issue if you would like to suggest any improve
 ## License
 
 solwallet uses the [MIT license](https://opensource.org/license/mit)
+
